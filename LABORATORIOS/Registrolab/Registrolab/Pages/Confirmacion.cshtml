@@ -1,0 +1,32 @@
+﻿@page
+@{
+    var nombre = TempData["Nombre"]?.ToString();
+    var correo = TempData["Correo"]?.ToString();
+    var edadTexto = TempData["Edad"]?.ToString();
+    var categoria = TempData["Categoria"]?.ToString();
+    var esMenor = int.TryParse(edadTexto, out var edad) && edad < 18;
+}
+
+<section class="confirmacion">
+    <div class="mensaje-exito">
+        <p><em>Categoría:</em> @categoria.</p>
+        <h2>Registro exitoso</h2>
+        <p>
+            Gracias, <strong>@nombre</strong>.
+            Se enviará información al correo <strong>@correo</strong>.
+        </p>
+        <p><em>Edad registrada:</em> @edadTexto años.</p>
+    </div>
+
+    @if (esMenor)
+    {
+        <div class="mensaje-advertencia">
+            <strong>Aviso:</strong> el estudiante tiene menos de 18 años.
+            Verifique el dato antes de continuar.
+        </div>
+    }
+
+    <a asp-page="Registro" class="boton-secundario">
+        Volver al formulario
+    </a>
+</section>

@@ -1,0 +1,31 @@
+﻿@page
+@model RegistroLab.Pages.RegistroModel 
+
+<div class="container mt-4">
+    <h1 class="mb-3">Formulario de registro</h1>
+
+    <form method="post" class="col-md-6">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Nombre" class="form-label"></label>
+            <input asp-for="Entrada.Nombre" class="form-control" />
+            <span asp-validation-for="Entrada.Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Correo" class="form-label"></label>
+            <input asp-for="Entrada.Correo" class="form-control" />
+            <span asp-validation-for="Entrada.Correo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Edad" class="form-label"></label>
+            <input asp-for="Entrada.Edad" class="form-control" />
+            <span asp-validation-for="Entrada.Edad" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+    </form>
+</div>
