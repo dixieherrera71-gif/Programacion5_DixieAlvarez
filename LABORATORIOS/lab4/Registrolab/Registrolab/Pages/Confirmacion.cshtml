@@ -1,0 +1,23 @@
+﻿@page
+@{
+    var nombre = TempData["Nombre"];
+    var mensaje = TempData["Mensaje"];
+    var monto = TempData["Monto"];
+    var resultado = TempData["Resultado"]?.ToString();
+    var enEspera = resultado == "EnEspera";
+}
+
+<div class="container mt-4">
+    <div class="alert @(enEspera ? "alert-warning" : "alert-success")">
+        <h2>@(enEspera ? "En lista de espera" : "¡Matrícula exitosa!")</h2>
+        <p><strong>@mensaje</strong></p>
+        <hr />
+        <p>Monto: <strong>@monto</strong></p>
+        @if (enEspera)
+        {
+            <p>El curso ya está lleno. Te avisaremos si hay espacio.</p>
+        }
+    </div>
+    <a asp-page="Registro" class="btn btn-secondary">Matricular otra persona</a>
+    <a asp-page="Directorio" class="btn btn-primary">Ver directorio</a>
+</div>
