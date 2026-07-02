@@ -1,0 +1,44 @@
+﻿@page
+@model SoporteLab.Pages.Tecnicos.CrearModel
+
+@{
+    ViewData["Title"] = "Nuevo tecnico";
+}
+
+<div class="container mt-4" style="max-width: 640px;">
+
+    <h1 class="mb-3">Nuevo tecnico</h1>
+
+    <form method="post">
+
+        <div asp-validation-summary="All" class="text-danger mb-2"></div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Nombre" class="form-label">Nombre</label>
+            <input asp-for="Entrada.Nombre" class="form-control" />
+            <span asp-validation-for="Entrada.Nombre" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Correo" class="form-label">Correo</label>
+            <input asp-for="Entrada.Correo" class="form-control" />
+            <span asp-validation-for="Entrada.Correo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Entrada.Especialidad" class="form-label">Especialidad</label>
+            <input asp-for="Entrada.Especialidad" class="form-control" />
+            <span asp-validation-for="Entrada.Especialidad" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Guardar
+        </button>
+
+        <a asp-page="/Tablero" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>

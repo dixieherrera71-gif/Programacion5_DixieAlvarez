@@ -1,0 +1,78 @@
+﻿@page
+@model SoporteLab.Pages.Tickets.CrearModel
+
+@{
+    ViewData["Title"] = "Nuevo Ticket";
+}
+
+<div class="container mt-4" style="max-width:650px;">
+
+    <h1>Nuevo Ticket</h1>
+
+    <form method="post">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="mb-3">
+
+            <label asp-for="Entrada.Titulo" class="form-label"></label>
+
+            <input asp-for="Entrada.Titulo" class="form-control" />
+
+            <span asp-validation-for="Entrada.Titulo" class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Entrada.Descripcion"></label>
+
+            <textarea asp-for="Entrada.Descripcion" class="form-control"></textarea>
+
+            <span asp-validation-for="Entrada.Descripcion" class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Entrada.Prioridad"></label>
+
+            <select asp-for="Entrada.Prioridad" class="form-select">
+
+                <option>Baja</option>
+                <option>Media</option>
+                <option>Alta</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Entrada.Estado"></label>
+
+            <select asp-for="Entrada.Estado" class="form-select">
+
+                <option>Abierto</option>
+                <option>EnProceso</option>
+                <option>Cerrado</option>
+
+            </select>
+
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+
+            Guardar
+
+        </button>
+
+        <a asp-page="/Tablero" class="btn btn-secondary">
+
+            Cancelar
+
+        </a>
+
+    </form>
+
+</div>

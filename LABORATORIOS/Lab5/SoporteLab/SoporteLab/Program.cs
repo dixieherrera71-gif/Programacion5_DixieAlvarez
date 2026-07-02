@@ -1,8 +1,15 @@
+using SoporteLab.Datos;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-
+builder.Services.AddScoped<TicketRepositorioAdo>();
+builder.Services.AddScoped<TecnicoRepositorioEf>();
+builder.Services.AddDbContext<SoporteContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("SoporteDb")));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

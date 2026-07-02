@@ -1,0 +1,41 @@
+﻿@page
+@model SoporteLab.Pages.Tickets.EliminarModel
+
+@{
+    ViewData["Title"] = "Eliminar ticket";
+}
+
+<div class="container mt-4" style="max-width: 640px;">
+
+    <h1 class="mb-3 text-danger">Eliminar ticket</h1>
+
+    <p>Esta acción no se puede deshacer. Confirma que deseas eliminar:</p>
+
+    <dl class="row">
+
+        <dt class="col-sm-3">Título</dt>
+        <dd class="col-sm-9">@Model.Entrada?.Titulo</dd>
+
+        <dt class="col-sm-3">Prioridad</dt>
+        <dd class="col-sm-9">@Model.Entrada?.Prioridad</dd>
+
+        <dt class="col-sm-3">Estado</dt>
+        <dd class="col-sm-9">@Model.Entrada?.Estado</dd>
+
+    </dl>
+
+    <form method="post">
+
+        <input type="hidden" name="id" value="@Model.Entrada?.Id" />
+
+        <button type="submit" class="btn btn-danger">
+            Eliminar
+        </button>
+
+        <a asp-page="/Tablero" class="btn btn-secondary">
+            Cancelar
+        </a>
+
+    </form>
+
+</div>
