@@ -1,0 +1,76 @@
+﻿@page
+@model CotizadorLab.Pages.CotizadorModel
+
+@{
+    ViewData["Title"] = "Cotizador de Servicios";
+}
+
+<h2>Cotizador de Servicios</h2>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="NombreCliente" class="form-label"></label>
+        <input asp-for="NombreCliente" class="form-control" />
+        <span asp-validation-for="NombreCliente" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Tipo de Servicio</label>
+        <select asp-for="TipoServicio" asp-items="Model.Servicios" class="form-select">
+            <option value="">Seleccione...</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Horas</label>
+        <input asp-for="Horas" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Kilómetros</label>
+        <input asp-for="Kilometros" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Meses</label>
+        <input asp-for="Meses" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Calcular
+    </button>
+
+</form>
+
+<hr />
+
+@if (Model.Total > 0)
+{
+    <div class="alert alert-success">
+
+        <h4>Resultado</h4>
+
+        <p><strong>@Model.Descripcion</strong></p>
+
+        <p>
+            Costo Base:
+            @Model.CostoBase.ToString("C")
+        </p>
+
+        <p>
+            Impuesto:
+            @Model.Impuesto.ToString("C")
+        </p>
+
+        <p>
+            Total:
+            @Model.Total.ToString("C")
+        </p>
+
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,66 @@
+﻿@page
+@model LiquidacionLab.Pages.LiquidacionModel
+
+<h2>Liquidación de Instructor</h2>
+
+<form method="post">
+
+    <div class="mb-3">
+        <label asp-for="Instructor.Nombre"></label>
+        <input asp-for="Instructor.Nombre" class="form-control" />
+        <span asp-validation-for="Instructor.Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Instructor.Categoria"></label>
+
+        <select asp-for="Instructor.Categoria"
+                asp-items="@(new SelectList(Model.Categorias))"
+                class="form-select">
+
+            <option value="">Seleccione...</option>
+
+        </select>
+
+        <span asp-validation-for="Instructor.Categoria" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Instructor.Horas"></label>
+        <input asp-for="Instructor.Horas" class="form-control" />
+        <span asp-validation-for="Instructor.Horas" class="text-danger"></span>
+    </div>
+
+    <button class="btn btn-primary">
+        Calcular
+    </button>
+
+</form>
+
+@if (Model.MontoBruto > 0)
+{
+    <hr />
+
+    <h4>Resultado</h4>
+
+    <p>
+        <strong>Monto Bruto:</strong>
+        @Model.MontoBruto
+    </p>
+
+    <p>
+        <strong>Deducción:</strong>
+        @Model.Deduccion
+    </p>
+
+    <p>
+        <strong>Monto Neto:</strong>
+        @Model.MontoNeto
+    </p>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+    
