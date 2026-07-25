@@ -1,44 +1,39 @@
 ﻿@page
-@model SoporteLab.Pages.Tecnicos.CrearModel
-
+@model SoporteLab.Pages.Tickets.CrearModel
 @{
-    ViewData["Title"] = "Nuevo tecnico";
+    ViewData["Title"] = "Crear Ticket";
 }
 
-<div class="container mt-4" style="max-width: 640px;">
+<h1>Crear nuevo ticket</h1>
 
-    <h1 class="mb-3">Nuevo tecnico</h1>
+<form method="post" class="mt-4">
+    <div class="mb-3">
+        <label asp-for="Entrada.Titulo" class="form-label">Título</label>
+        <input asp-for="Entrada.Titulo" class="form-control" />
+        <span asp-validation-for="Entrada.Titulo" class="text-danger"></span>
+    </div>
 
-    <form method="post">
+    <div class="mb-3">
+        <label asp-for="Entrada.Descripcion" class="form-label">Descripción</label>
+        <textarea asp-for="Entrada.Descripcion" class="form-control" rows="3"></textarea>
+    </div>
 
-        <div asp-validation-summary="All" class="text-danger mb-2"></div>
+    <div class="mb-3">
+        <label asp-for="Entrada.Estado" class="form-label">Estado</label>
+        <select asp-for="Entrada.Estado" class="form-select">
+            <option>Abierto</option>
+            <option>En proceso</option>
+            <option>Cerrado</option>
+        </select>
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="Entrada.Nombre" class="form-label">Nombre</label>
-            <input asp-for="Entrada.Nombre" class="form-control" />
-            <span asp-validation-for="Entrada.Nombre" class="text-danger"></span>
-        </div>
+    <div class="mb-3">
+        <label asp-for="Entrada.TecnicoId" class="form-label">Técnico asignado</label>
+        <select asp-for="Entrada.TecnicoId" asp-items="Model.Tecnicos" class="form-select">
+            <option value="">-- Sin asignar --</option>
+        </select>
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="Entrada.Correo" class="form-label">Correo</label>
-            <input asp-for="Entrada.Correo" class="form-control" />
-            <span asp-validation-for="Entrada.Correo" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Especialidad" class="form-label">Especialidad</label>
-            <input asp-for="Entrada.Especialidad" class="form-control" />
-            <span asp-validation-for="Entrada.Especialidad" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-            Guardar
-        </button>
-
-        <a asp-page="/Tablero" class="btn btn-secondary">
-            Cancelar
-        </a>
-
-    </form>
-
-</div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a class="btn btn-secondary" asp-page="/Tablero">Cancelar</a>
+</form>

@@ -1,41 +1,27 @@
-﻿@page
+﻿@page "{id:int}"
 @model SoporteLab.Pages.Tickets.EliminarModel
-
 @{
-    ViewData["Title"] = "Eliminar ticket";
+    ViewData["Title"] = "Eliminar Ticket";
 }
 
-<div class="container mt-4" style="max-width: 640px;">
+<h1>Eliminar Ticket</h1>
 
-    <h1 class="mb-3 text-danger">Eliminar ticket</h1>
-
-    <p>Esta acción no se puede deshacer. Confirma que deseas eliminar:</p>
-
-    <dl class="row">
-
-        <dt class="col-sm-3">Título</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Titulo</dd>
-
-        <dt class="col-sm-3">Prioridad</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Prioridad</dd>
-
-        <dt class="col-sm-3">Estado</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Estado</dd>
-
-    </dl>
-
-    <form method="post">
-
-        <input type="hidden" name="id" value="@Model.Entrada?.Id" />
-
-        <button type="submit" class="btn btn-danger">
-            Eliminar
-        </button>
-
-        <a asp-page="/Tablero" class="btn btn-secondary">
-            Cancelar
-        </a>
-
-    </form>
-
+<div class="alert alert-warning mt-4" role="alert">
+    ¿Segura que quieres eliminar este ticket? No se puede deshacer.
 </div>
+
+<dl class="row mt-4">
+    <dt class="col-sm-3">Título</dt>
+    <dd class="col-sm-9">@Model.Ticket.Titulo</dd>
+
+    <dt class="col-sm-3">Estado</dt>
+    <dd class="col-sm-9">@Model.Ticket.Estado</dd>
+
+    <dt class="col-sm-3">Técnico</dt>
+    <dd class="col-sm-9">@(Model.Ticket.Tecnico?.Nombre ?? "Sin asignar")</dd>
+</dl>
+
+<form method="post" class="mt-4">
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a class="btn btn-secondary" asp-page="/Tablero">Cancelar</a>
+</form>

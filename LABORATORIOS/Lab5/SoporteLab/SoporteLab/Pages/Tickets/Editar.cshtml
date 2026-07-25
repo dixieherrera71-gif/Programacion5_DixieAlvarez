@@ -1,54 +1,39 @@
-﻿@page
+﻿@page "{id:int}"
 @model SoporteLab.Pages.Tickets.EditarModel
-
 @{
-    ViewData["Title"] = "Editar ticket";
+    ViewData["Title"] = "Editar Ticket";
 }
 
-<div class="container mt-4" style="max-width: 640px;">
+<h1>Editar Ticket</h1>
 
-    <h1 class="mb-3">Editar ticket</h1>
+<form method="post" class="mt-4">
+    <div class="mb-3">
+        <label asp-for="Entrada.Titulo" class="form-label">Título</label>
+        <input asp-for="Entrada.Titulo" class="form-control" />
+        <span asp-validation-for="Entrada.Titulo" class="text-danger"></span>
+    </div>
 
-    <form method="post">
+    <div class="mb-3">
+        <label asp-for="Entrada.Descripcion" class="form-label">Descripción</label>
+        <textarea asp-for="Entrada.Descripcion" class="form-control" rows="3"></textarea>
+    </div>
 
-        <input type="hidden" asp-for="Entrada.Id" />
+    <div class="mb-3">
+        <label asp-for="Entrada.Estado" class="form-label">Estado</label>
+        <select asp-for="Entrada.Estado" class="form-select">
+            <option>Abierto</option>
+            <option>En proceso</option>
+            <option>Cerrado</option>
+        </select>
+    </div>
 
-        <div asp-validation-summary="All" class="text-danger mb-2"></div>
+    <div class="mb-3">
+        <label asp-for="Entrada.TecnicoId" class="form-label">Técnico asignado</label>
+        <select asp-for="Entrada.TecnicoId" asp-items="Model.Tecnicos" class="form-select">
+            <option value="">-- Sin asignar --</option>
+        </select>
+    </div>
 
-        <div class="mb-3">
-            <label asp-for="Entrada.Titulo" class="form-label">Titulo</label>
-            <input asp-for="Entrada.Titulo" class="form-control" />
-            <span asp-validation-for="Entrada.Titulo" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Descripcion" class="form-label">Descripcion</label>
-            <textarea asp-for="Entrada.Descripcion" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="Entrada.Descripcion" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Prioridad" class="form-label">Prioridad</label>
-            <select asp-for="Entrada.Prioridad" class="form-select">
-                <option>Baja</option>
-                <option>Media</option>
-                <option>Alta</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Estado" class="form-label">Estado</label>
-            <select asp-for="Entrada.Estado" class="form-select">
-                <option>Abierto</option>
-                <option>EnProceso</option>
-                <option>Cerrado</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-
-        <a asp-page="/Tablero" class="btn btn-secondary">Cancelar</a>
-
-    </form>
-
-</div>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a class="btn btn-secondary" asp-page="/Tablero">Cancelar</a>
+</form>

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SoporteLab.Datos;
 using SoporteLab.Models;
 
@@ -7,29 +9,44 @@ namespace SoporteLab.Pages.Tickets;
 
 public class CrearModel : PageModel
 {
-    private readonly TicketRepositorioAdo _repo;
+    private readonly TicketRepositorioEf _tickets;
+    private readonly SoporteContext _ctx;
 
-    public CrearModel(TicketRepositorioAdo repo)
+    public CrearModel(TicketRepositorioEf tickets, SoporteContext ctx)
     {
-        _repo = repo;
+        _tickets = tickets;
+        _ctx = ctx;
     }
 
     [BindProperty]
     public Ticket Entrada { get; set; } = new();
 
-    public void OnGet()
+    public SelectList Tecnicos { get; set; } = default!;
+
+    public async Task OnGetAsync()
     {
+        await CargarTecnicosAsync();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
+        {
+            await CargarTecnicosAsync();
             return Page();
+        }
 
-        Entrada.FechaCreacion = DateTime.Now;
-
-        _repo.Agregar(Entrada);
+        await _tickets.CrearAsync(Entrada);
 
         return RedirectToPage("/Tablero");
+    }
+
+    private async Task CargarTecnicosAsync()
+    {
+        var lista = await _ctx.Tecnicos
+            .OrderBy(t => t.Nombre)
+            .ToListAsync();
+
+        Tecnicos = new SelectList(lista, "Id", "Nombre");
     }
 }

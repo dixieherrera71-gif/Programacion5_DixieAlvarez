@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SoporteLab.Datos;
@@ -7,35 +8,31 @@ namespace SoporteLab.Pages.Tecnicos;
 
 public class EditarModel : PageModel
 {
-    private readonly TecnicoRepositorioEf _repo;
+    private readonly TecnicoRepositorioEf _repositorio;
 
-    public EditarModel(TecnicoRepositorioEf repo)
+    public EditarModel(TecnicoRepositorioEf repositorio)
     {
-        _repo = repo;
+        _repositorio = repositorio;
     }
 
     [BindProperty]
     public Tecnico Entrada { get; set; } = new();
 
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        var tecnico = _repo.ObtenerPorId(id);
-
-        if (tecnico is null)
-            return RedirectToPage("/Tablero");
-
-        Entrada = tecnico;
+        Entrada = await _repositorio.ObtenerPorIdAsync(id);
+        if (Entrada == null)
+            return NotFound();
 
         return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
             return Page();
 
-        _repo.Actualizar(Entrada);
-
+        await _repositorio.ActualizarAsync(Entrada);
         return RedirectToPage("/Tablero");
     }
 }

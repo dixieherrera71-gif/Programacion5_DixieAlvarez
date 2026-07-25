@@ -21,12 +21,12 @@ public class CrearModel : PageModel
     {
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
             return Page();
 
-        _repo.Agregar(Entrada);
+        await _repo.CrearAsync(Entrada);
 
         return RedirectToPage("/Tablero");
     }

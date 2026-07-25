@@ -1,41 +1,27 @@
-﻿@page
+﻿@page "{id:int}"
 @model SoporteLab.Pages.Tecnicos.EliminarModel
-
 @{
-    ViewData["Title"] = "Eliminar tecnico";
+    ViewData["Title"] = "Eliminar Técnico";
 }
 
-<div class="container mt-4" style="max-width: 640px;">
+<h1>Eliminar Técnico</h1>
 
-    <h1 class="mb-3 text-danger">Eliminar tecnico</h1>
-
-    <p>Esta accion no se puede deshacer. Confirma que deseas eliminar:</p>
-
-    <dl class="row">
-
-        <dt class="col-sm-3">Nombre</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Nombre</dd>
-
-        <dt class="col-sm-3">Especialidad</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Especialidad</dd>
-
-        <dt class="col-sm-3">Correo</dt>
-        <dd class="col-sm-9">@Model.Entrada?.Correo</dd>
-
-    </dl>
-
-    <form method="post">
-
-        <input type="hidden" name="id" value="@Model.Entrada?.Id" />
-
-        <button type="submit" class="btn btn-danger">
-            Eliminar
-        </button>
-
-        <a asp-page="/Tablero" class="btn btn-secondary">
-            Cancelar
-        </a>
-
-    </form>
-
+<div class="alert alert-warning mt-4" role="alert">
+    ¿Estás seguro que deseas eliminar a este técnico? Esta acción no se puede deshacer.
 </div>
+
+<dl class="row mt-4">
+    <dt class="col-sm-3">Nombre completo</dt>
+    <dd class="col-sm-9">@Model.Tecnico.Nombre</dd>
+
+    <dt class="col-sm-3">Correo electrónico</dt>
+    <dd class="col-sm-9">@Model.Tecnico.Correo</dd>
+
+    <dt class="col-sm-3">Teléfono</dt>
+    <dd class="col-sm-9">@Model.Tecnico.Telefono</dd>
+</dl>
+
+<form method="post" class="mt-4">
+    <button type="submit" class="btn btn-danger">Eliminar definitivamente</button>
+    <a class="btn btn-secondary" asp-page="/Tablero">Cancelar</a>
+</form>

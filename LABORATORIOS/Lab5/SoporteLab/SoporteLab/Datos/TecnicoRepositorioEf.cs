@@ -5,46 +5,38 @@ namespace SoporteLab.Datos;
 
 public class TecnicoRepositorioEf
 {
-    private readonly SoporteContext _context;
+    private readonly SoporteContext _ctx;
 
-    public TecnicoRepositorioEf(SoporteContext context)
+    public TecnicoRepositorioEf(SoporteContext ctx)
     {
-        _context = context;
-    }
-    public List<Tecnico> ObtenerTodos()
-    {
-        return _context.Tecnicos
-            .AsNoTracking()
-            .OrderBy(t => t.Nombre)
-            .ToList();
+        _ctx = ctx;
     }
 
-    public void Agregar(Tecnico tecnico)
-    {
-        _context.Tecnicos.Add(tecnico);
-        _context.SaveChanges();
-    }
-    public Tecnico? ObtenerPorId(int id)
-    {
-        return _context.Tecnicos.Find(id);
-    }
+    public async Task<List<Tecnico>> ObtenerTodosAsync()
+        => await _ctx.Tecnicos.OrderBy(t => t.Nombre).ToListAsync();
 
-    public void Actualizar(Tecnico tecnico)
+    public async Task<Tecnico?> ObtenerPorIdAsync(int id)
+        => await _ctx.Tecnicos.FirstOrDefaultAsync(t => t.Id == id);
+
+    public async Task CrearAsync(Tecnico tecnico)
     {
-        _context.Tecnicos.Update(tecnico);
-        _context.SaveChanges();
+        _ctx.Tecnicos.Add(tecnico);
+        await _ctx.SaveChangesAsync();
     }
 
-    public void Eliminar(int id)
+    public async Task ActualizarAsync(Tecnico tecnico)
     {
-        var tecnico = _context.Tecnicos.Find(id);
+        _ctx.Tecnicos.Update(tecnico);
+        await _ctx.SaveChangesAsync();
+    }
 
-        if (tecnico != null)
+    public async Task EliminarAsync(int id)
+    {
+        var tecnico = await _ctx.Tecnicos.FindAsync(id);
+        if (tecnico is not null)
         {
-            _context.Tecnicos.Remove(tecnico);
-            _context.SaveChanges();
+            _ctx.Tecnicos.Remove(tecnico);
         }
+        await _ctx.SaveChangesAsync();
     }
-
-
 }

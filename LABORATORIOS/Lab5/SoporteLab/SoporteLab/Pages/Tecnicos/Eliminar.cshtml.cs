@@ -7,30 +7,27 @@ namespace SoporteLab.Pages.Tecnicos;
 
 public class EliminarModel : PageModel
 {
-    private readonly TecnicoRepositorioEf _repo;
+    private readonly TecnicoRepositorioEf _repositorio;
 
-    public EliminarModel(TecnicoRepositorioEf repo)
+    public EliminarModel(TecnicoRepositorioEf repositorio)
     {
-        _repo = repo;
+        _repositorio = repositorio;
     }
 
-    [BindProperty]
-    public Tecnico? Entrada { get; set; }
+    public Tecnico Tecnico { get; set; } = new();
 
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        Entrada = _repo.ObtenerPorId(id);
-
-        if (Entrada is null)
-            return RedirectToPage("/Tablero");
+        Tecnico = await _repositorio.ObtenerPorIdAsync(id);
+        if (Tecnico == null)
+            return NotFound();
 
         return Page();
     }
 
-    public IActionResult OnPost(int id)
+    public async Task<IActionResult> OnPostAsync(int id)
     {
-        _repo.Eliminar(id);
-
+        await _repositorio.EliminarAsync(id);
         return RedirectToPage("/Tablero");
     }
 }

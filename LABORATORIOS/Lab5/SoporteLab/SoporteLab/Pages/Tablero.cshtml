@@ -1,116 +1,72 @@
 ﻿@page
 @model SoporteLab.Pages.TableroModel
-
 @{
     ViewData["Title"] = "Tablero";
 }
 
-<div class="container mt-4">
+<h1>Tablero de control</h1>
 
-    <h1 class="mb-3">Tablero de soporte</h1>
-
-    <div class="d-flex justify-content-between align-items-center mt-3">
-        <h2 class="h4 mb-0">Tickets (via ADO.NET)</h2>
-
-        <a asp-page="/Tickets/Crear" class="btn btn-primary btn-sm">
-            Nuevo ticket
-        </a>
-    </div>
-
-    <table class="table table-striped align-middle">
-
-        <thead>
+<h2>Tickets</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Estado</th>
+            <th>Técnico</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model.Tickets)
+        {
             <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Prioridad</th>
-                <th>Estado</th>
-                <th>Creado</th>
-                <th></th>
+                <td>@t.Id</td>
+                <td>@t.Titulo</td>
+                <td>@t.Estado</td>
+                <td>@(t.Tecnico?.Nombre ?? "Sin asignar")</td>
+                <td>@t.FechaCreacion.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-page="/Tickets/Editar" asp-route-id="@t.Id">Editar</a>
+                    <a class="btn btn-sm btn-danger" asp-page="/Tickets/Eliminar" asp-route-id="@t.Id">Borrar</a>
+                </td>
             </tr>
-        </thead>
+        }
+    </tbody>
+</table>
 
-        <tbody>
+<p><a class="btn btn-primary" asp-page="/Tickets/Crear">Crear nuevo ticket</a></p>
 
-            @foreach (var t in Model.Tickets)
-            {
-                <tr>
-                    <td>@t.Id</td>
-                    <td>@t.Titulo</td>
-                    <td>@t.Prioridad</td>
-                    <td>@t.Estado</td>
-                    <td>@t.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</td>
+<hr />
 
-                    <td class="text-nowrap">
-                        <a asp-page="/Tickets/Editar"
-                           asp-route-id="@t.Id"
-                           class="btn btn-outline-secondary btn-sm">
-                            Editar
-                        </a>
-
-                        <a asp-page="/Tickets/Eliminar"
-                           asp-route-id="@t.Id"
-                           class="btn btn-outline-danger btn-sm">
-                            Eliminar
-                        </a>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-
-    </table>
-
-    <div class="d-flex justify-content-between align-items-center mt-4">
-
-        <h2 class="h4 mb-0">Tecnicos (via EF Core)</h2>
-
-        <a asp-page="/Tecnicos/Crear" class="btn btn-primary btn-sm">
-            Nuevo tecnico
-        </a>
-
-    </div>
-
-    <table class="table table-striped align-middle">
-
-        <thead>
+<h2>Técnicos</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tec in Model.Tecnicos)
+        {
             <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Especialidad</th>
-                <th>Correo</th>
-                <th></th>
+                <td>@tec.Id</td>
+                <td>@tec.Nombre</td>
+                <td>@tec.Correo</td>
+                <td>@tec.Telefono</td>
+                <td>
+                    <a class="btn btn-sm btn-warning" asp-page="/Tecnicos/Editar" asp-route-id="@tec.Id">Editar</a>
+                    <a class="btn btn-sm btn-danger" asp-page="/Tecnicos/Eliminar" asp-route-id="@tec.Id">Borrar</a>
+                </td>
             </tr>
-        </thead>
+        }
+    </tbody>
+</table>
 
-        <tbody>
-
-            @foreach (var tec in Model.Tecnicos)
-            {
-                <tr>
-                    <td>@tec.Id</td>
-                    <td>@tec.Nombre</td>
-                    <td>@tec.Especialidad</td>
-                    <td>@tec.Correo</td>
-
-                    <td class="text-nowrap">
-                        <a asp-page="/Tecnicos/Editar"
-                           asp-route-id="@tec.Id"
-                           class="btn btn-outline-secondary btn-sm">
-                            Editar
-                        </a>
-
-                        <a asp-page="/Tecnicos/Eliminar"
-                           asp-route-id="@tec.Id"
-                           class="btn btn-outline-danger btn-sm">
-                            Eliminar
-                        </a>
-                    </td>
-                </tr>
-            }
-
-        </tbody>
-
-    </table>
-
-</div>
+<p><a class="btn btn-primary" asp-page="/Tecnicos/Crear">Crear nuevo técnico</a></p>
+<p><a class="btn btn-secondary" asp-page="/Reportes/Reporte">Ver Reporte</a></p>

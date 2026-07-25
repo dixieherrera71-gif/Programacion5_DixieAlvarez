@@ -7,30 +7,25 @@ namespace SoporteLab.Pages.Tickets;
 
 public class EliminarModel : PageModel
 {
-    private readonly TicketRepositorioAdo _repo;
+    private readonly TicketRepositorioEf _tickets;
 
-    public EliminarModel(TicketRepositorioAdo repo)
+    public EliminarModel(TicketRepositorioEf tickets)
     {
-        _repo = repo;
+        _tickets = tickets;
     }
 
-    [BindProperty]
-    public Ticket? Entrada { get; set; }
+    public Ticket Ticket { get; set; } = new();
 
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        Entrada = _repo.ObtenerPorId(id);
-
-        if (Entrada is null)
-            return RedirectToPage("/Tablero");
-
+        Ticket = await _tickets.ObtenerPorIdAsync(id);
+        if (Ticket == null) return NotFound();
         return Page();
     }
 
-    public IActionResult OnPost(int id)
+    public async Task<IActionResult> OnPostAsync(int id)
     {
-        _repo.Eliminar(id);
-
+        await _tickets.EliminarAsync(id);
         return RedirectToPage("/Tablero");
     }
 }

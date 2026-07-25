@@ -1,46 +1,29 @@
-﻿@page
+﻿@page "{id:int}"
 @model SoporteLab.Pages.Tecnicos.EditarModel
-
 @{
-    ViewData["Title"] = "Editar tecnico";
+    ViewData["Title"] = "Editar Técnico";
 }
 
-<div class="container mt-4" style="max-width: 640px;">
+<h1>Editar Técnico</h1>
 
-    <h1 class="mb-3">Editar tecnico</h1>
+<form method="post" class="mt-4">
+    <div class="mb-3">
+        <label asp-for="Entrada.Nombre" class="form-label">Nombre completo</label>
+        <input asp-for="Entrada.Nombre" class="form-control" />
+        <span asp-validation-for="Entrada.Nombre" class="text-danger"></span>
+    </div>
 
-    <form method="post">
+    <div class="mb-3">
+        <label asp-for="Entrada.Correo" class="form-label">Correo electrónico</label>
+        <input asp-for="Entrada.Correo" class="form-control" />
+    </div>
 
-        <input type="hidden" asp-for="Entrada.Id" />
+    <div class="mb-3">
+        <label asp-for="Entrada.Telefono" class="form-label">Teléfono</label>
+        <input asp-for="Entrada.Telefono" class="form-control" />
+        <span asp-validation-for="Entrada.Telefono" class="text-danger"></span>
+    </div>
 
-        <div asp-validation-summary="All" class="text-danger mb-2"></div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Nombre" class="form-label">Nombre</label>
-            <input asp-for="Entrada.Nombre" class="form-control" />
-            <span asp-validation-for="Entrada.Nombre" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Correo" class="form-label">Correo</label>
-            <input asp-for="Entrada.Correo" class="form-control" />
-            <span asp-validation-for="Entrada.Correo" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Entrada.Especialidad" class="form-label">Especialidad</label>
-            <input asp-for="Entrada.Especialidad" class="form-control" />
-            <span asp-validation-for="Entrada.Especialidad" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-            Guardar cambios
-        </button>
-
-        <a asp-page="/Tablero" class="btn btn-secondary">
-            Cancelar
-        </a>
-
-    </form>
-
-</div>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a class="btn btn-secondary" asp-page="/Tablero">Cancelar</a>
+</form>

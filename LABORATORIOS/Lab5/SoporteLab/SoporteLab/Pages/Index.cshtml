@@ -1,10 +1,84 @@
 ﻿@page
-@model IndexModel
+@model SoporteLab.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-4 rounded-3 text-white" style="background: linear-gradient(135deg, #512BD4 0%, #6E3BE6 100%);">
+    <div class="container-fluid py-3">
+        <h1 class="display-5 fw-bold">Mesa de ayuda SoporteLab</h1>
+        <p class="col-md-9 fs-5">
+            Gestiona los tickets de soporte y sus técnicos responsables.
+            Registra incidencias, asígnalas y consulta el reporte por técnico.
+        </p>
+        <a class="btn btn-light btn-lg fw-semibold" asp-page="/Tablero">Ir al tablero</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card text-bg-light h-100 text-center">
+                <div class="card-body">
+                    <div class="display-6 fw-bold">@Model.TotalTickets</div>
+                    <div class="text-muted">Tickets registrados</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-light h-100 text-center">
+                <div class="card-body">
+                    <div class="display-6 fw-bold text-danger">@Model.TicketsAbiertos</div>
+                    <div class="text-muted">Tickets abiertos</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-light h-100 text-center">
+                <div class="card-body">
+                    <div class="display-6 fw-bold">@Model.TotalTecnicos</div>
+                    <div class="text-muted">Técnicos disponibles</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Tablero</h5>
+                    <p class="card-text">Vista general de tickets y técnicos.</p>
+                </div>
+                <a asp-page="/Tablero" class="btn btn-primary">Abrir</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Nuevo ticket</h5>
+                    <p class="card-text">Registra una incidencia y asígnala.</p>
+                </div>
+                <a asp-page="/Tickets/Crear" class="btn btn-primary">Crear</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Nuevo técnico</h5>
+                    <p class="card-text">Agrega un técnico de soporte.</p>
+                </div>
+                <a asp-page="/Tecnicos/Crear" class="btn btn-primary">Crear</a>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Reporte</h5>
+                    <p class="card-text">Tickets por técnico (ADO.NET).</p>
+                </div>
+                <a asp-page="/Reportes/Reporte" class="btn btn-primary">Ver</a>
+            </div>
+        </div>
+    </div>
 </div>

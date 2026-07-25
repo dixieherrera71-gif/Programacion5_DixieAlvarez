@@ -1,0 +1,33 @@
+﻿@page
+@model SoporteLab.Pages.Reportes.ReporteModel
+@using System.Data
+@{
+    ViewData["Title"] = "Reporte de tickets por técnico";
+}
+
+<h1>Reporte de tickets por técnico</h1>
+<p class="text-muted">Generado con ADO.NET en modo desconectado.</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Estado</th>
+            <th>Técnico</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (DataRow fila in Model.Datos.Rows)
+        {
+            <tr>
+                <td>@fila["Id"]</td>
+                <td>@fila["Titulo"]</td>
+                <td>@fila["Estado"]</td>
+                <td>@fila["Tecnico"]</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><a class="btn btn-secondary" asp-page="/Tablero">Volver al tablero</a></p>
