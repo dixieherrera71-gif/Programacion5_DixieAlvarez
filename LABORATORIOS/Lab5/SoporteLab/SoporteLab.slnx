@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="SoporteLab.Api/SoporteLab.Api.csproj" Id="f7721a80-5e60-4898-bdfb-8bb5a4fc251a" />
   <Project Path="SoporteLab/SoporteLab.csproj" />
 </Solution>
