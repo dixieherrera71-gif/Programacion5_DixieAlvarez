@@ -1,17 +1,20 @@
+using SoporteLab.Api.Servicios;
 using Microsoft.EntityFrameworkCore;
 using SoporteLab.Datos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<SoporteContext>(opciones =>
-opciones.UseSqlServer(
-builder.Configuration.GetConnectionString("SoporteDb")));
+    opciones.UseSqlServer(
+        builder.Configuration.GetConnectionString("SoporteDb")));
+
+builder.Services.AddScoped<ITicketServicio, TicketServicio>();
 
 var app = builder.Build();
 
