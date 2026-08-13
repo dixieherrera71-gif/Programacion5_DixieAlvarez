@@ -1,0 +1,222 @@
+﻿@page
+@model CafeLab.Web.Pages.TableroModel
+@{
+    ViewData["Title"] = "Tablero de pedidos";
+}
+
+<h1 class="mb-3">Tablero de pedidos</h1>
+
+<div id="configuracionApi"
+     data-api-base-url="@Model.ApiBaseUrl"></div>
+
+<div class="row g-2 mb-3">
+    <div class="col-auto">
+        <select id="filtroEstado" class="form-select">
+            <option value="">Todos los estados</option>
+            <option value="Recibido">Recibido</option>
+            <option value="Preparando">Preparando</option>
+            <option value="Entregado">Entregado</option>
+        </select>
+    </div>
+    <div class="col-auto">
+        <button id="btnRecargar" class="btn btn-primary">Recargar</button>
+    </div>
+    <div class="col-auto">
+        <button id="btnReporte" class="btn btn-outline-danger" type="button">
+            Descargar reporte PDF
+        </button>
+    </div>
+    <div class="col-auto">
+        <button id="btnSalir" class="btn btn-outline-secondary" type="button">
+            Cerrar sesion
+        </button>
+    </div>
+</div>
+
+<div id="aviso"></div>
+
+<table class="table table-hover align-middle">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Producto</th>
+            <th class="text-center">Cant.</th>
+            <th class="text-end">Total</th>
+            <th>Estado</th>
+            <th>Accion</th>
+        </tr>
+    </thead>
+    <tbody id="cuerpoTabla"></tbody>
+</table>
+
+@section Scripts {
+    <script>
+        const API = document.getElementById("configuracionApi")
+                            .dataset.apiBaseUrl;
+        const TOKEN = sessionStorage.getItem("cafelab_token");
+
+        if (!TOKEN) location.href = "/Login";
+
+        function cabecerasJwt(extra = {}) {
+            return { ...extra, "Authorization": "Bearer " + TOKEN };
+        }
+
+        async function cargarPedidos(limpiarAviso = true) {
+            const estado = document.getElementById("filtroEstado").value;
+            let url = API + "api/pedidos?pagina=1&tamano=20";
+            if (estado) url += "&estado=" + encodeURIComponent(estado);
+
+            try {
+                const respuesta = await fetch(url, {
+                    headers: cabecerasJwt()
+                });
+
+                if (respuesta.status === 401) {
+                    sessionStorage.removeItem("cafelab_token");
+                    location.href = "/Login";
+                    return;
+                }
+
+                if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+
+                const pedidos = await respuesta.json();
+                dibujarTabla(pedidos);
+                if (limpiarAviso) mostrarAviso("");
+            } catch (error) {
+                mostrarAviso("No se pudo contactar al API: " + error.message,
+                              "danger");
+            }
+        }
+
+        function dibujarTabla(pedidos) {
+            const cuerpo = document.getElementById("cuerpoTabla");
+
+            cuerpo.replaceChildren();
+
+            if (pedidos.length === 0) {
+                const fila = document.createElement("tr");
+                const celda = document.createElement("td");
+                celda.colSpan = 7;
+                celda.className = "text-muted";
+                celda.textContent = "Sin pedidos.";
+                fila.appendChild(celda);
+                cuerpo.appendChild(fila);
+                return;
+            }
+
+            for (const p of pedidos) {
+                const fila = document.createElement("tr");
+
+                agregarCelda(fila, p.id);
+                agregarCelda(fila, p.cliente);
+                agregarCelda(fila, p.productoNombre);
+                agregarCelda(fila, p.cantidad, "text-center");
+                agregarCelda(fila, Number(p.total).toFixed(2), "text-end");
+                agregarCelda(fila, p.estado);
+
+                const acciones = agregarCelda(fila, "");
+                acciones.appendChild(botonSiguiente(p));
+                cuerpo.appendChild(fila);
+            }
+        }
+
+        function agregarCelda(fila, valor, clase = "") {
+            const celda = document.createElement("td");
+            celda.textContent = valor;
+            celda.className = clase;
+            fila.appendChild(celda);
+            return celda;
+        }
+
+        function botonSiguiente(pedido) {
+            const siguiente = pedido.estado === "Recibido"   ? "Preparando"
+                            : pedido.estado === "Preparando" ? "Entregado"
+                            : null;
+
+            const boton = document.createElement("button");
+
+            if (siguiente === null) {
+                boton.className = "btn btn-sm btn-secondary";
+                boton.textContent = "Completado";
+                boton.disabled = true;
+                return boton;
+            }
+
+            boton.className = "btn btn-sm btn-success";
+            boton.textContent = "Pasar a " + siguiente;
+            boton.onclick = () => cambiarEstado(pedido.id, siguiente);
+
+            return boton;
+        }
+
+        async function cambiarEstado(id, estado) {
+            try {
+                const respuesta = await fetch(
+                    API + "api/pedidos/" + id + "/estado", {
+                        method: "PUT",
+                        headers: cabecerasJwt({
+                            "Content-Type": "application/json"
+                        }),
+                        body: JSON.stringify({ estado: estado })
+                    });
+
+                if (!respuesta.ok) {
+                    const detalle = await respuesta.text();
+                    throw new Error(detalle || ("HTTP " + respuesta.status));
+                }
+
+                await cargarPedidos(false);
+                mostrarAviso("Pedido " + id + " actualizado.", "success");
+            } catch (error) {
+                mostrarAviso("No se pudo actualizar: " + error.message, "danger");
+            }
+        }
+
+        function mostrarAviso(texto, tipo) {
+            const zona = document.getElementById("aviso");
+            zona.replaceChildren();
+            if (!texto) return;
+
+            const alerta = document.createElement("div");
+            alerta.className = "alert alert-" + tipo;
+            alerta.textContent = texto;
+            zona.appendChild(alerta);
+        }
+
+        async function descargarReporte() {
+            try {
+                const respuesta = await fetch(
+                    API + "api/reportes/pedidos", {
+                        headers: cabecerasJwt()
+                    });
+
+                if (!respuesta.ok)
+                    throw new Error("HTTP " + respuesta.status);
+
+                const archivo = await respuesta.blob();
+                const url = URL.createObjectURL(archivo);
+                const enlace = document.createElement("a");
+                enlace.href = url;
+                enlace.download = "pedidos.pdf";
+                enlace.click();
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                mostrarAviso("No se pudo descargar el reporte: " +
+                              error.message, "danger");
+            }
+        }
+
+        document.getElementById("btnRecargar").onclick = () => cargarPedidos();
+        document.getElementById("filtroEstado").onchange = () => cargarPedidos();
+        document.getElementById("btnReporte").onclick = descargarReporte;
+        document.getElementById("btnSalir").onclick = () => {
+            sessionStorage.removeItem("cafelab_token");
+            sessionStorage.removeItem("cafelab_rol");
+            location.href = "/Login";
+        };
+
+        cargarPedidos();                    // primera carga
+        setInterval(cargarPedidos, 15000); // refresco automatico
+    </script>
+}

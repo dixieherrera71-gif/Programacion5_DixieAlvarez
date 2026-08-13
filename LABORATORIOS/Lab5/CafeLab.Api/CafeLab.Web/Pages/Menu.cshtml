@@ -1,0 +1,77 @@
+﻿@page
+@model CafeLab.Web.Pages.MenuModel
+@{
+    ViewData["Title"] = "Menu";
+    var categorias = new[] { "Bebida", "Reposteria", "Almuerzo" };
+}
+
+<h1 class="mb-3">Menu de la cafeteria</h1>
+
+@if (Model.Error is not null)
+{
+    <div class="alert alert-danger">@Model.Error</div>
+}
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="categoria" class="form-select">
+            <option value="">Todas las categorias</option>
+            @foreach (var c in categorias)
+            {
+                <option value="@c" selected="@(Model.Categoria == c)">@c</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </div>
+</form>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Categoria</th>
+            <th class="text-end">Precio</th>
+            <th class="text-center">Veces pedido</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Productos)
+        {
+            <tr>
+                <td>@p.Nombre</td>
+                <td>@p.Categoria</td>
+                <td class="text-end">@p.Precio.ToString("N2")</td>
+                <td class="text-center">@p.VecesPedido</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-success"
+                       asp-page="/Pedidos/Crear"
+                       asp-route-productoId="@p.Id">Pedir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Productos.Any() && Model.Error is null)
+{
+    <p class="text-muted">No hay productos para mostrar en esta pagina.</p>
+}
+
+<nav>
+    <a class="btn btn-outline-secondary
+    @(Model.Pagina <= 1 ? "disabled" : "")"
+       asp-page="/Menu"
+       asp-route-categoria="@Model.Categoria"
+       asp-route-pagina="@(Model.Pagina - 1)">Anterior</a>
+
+    <span class="mx-2">Pagina @Model.Pagina</span>
+
+    <a class="btn btn-outline-secondary
+    @(!Model.HaySiguiente ? "disabled" : "")"
+       asp-page="/Menu"
+       asp-route-categoria="@Model.Categoria"
+       asp-route-pagina="@(Model.Pagina + 1)">Siguiente</a>
+</nav>

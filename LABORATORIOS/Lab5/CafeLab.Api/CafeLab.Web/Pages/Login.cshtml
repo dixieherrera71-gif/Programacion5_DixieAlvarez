@@ -1,0 +1,71 @@
+﻿@page
+@model CafeLab.Web.Pages.LoginModel
+@{
+    ViewData["Title"] = "Ingresar";
+}
+
+<div id="configuracionApi"
+     data-api-base-url="@Model.ApiBaseUrl"></div>
+
+<h1>Ingreso del personal</h1>
+
+<div id="avisoLogin" class="mb-3"></div>
+
+<form id="formLogin" class="col-md-5">
+    <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input id="correo" type="email" required class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label for="contrasena" class="form-label">Contrasena</label>
+        <input id="contrasena" type="password" required class="form-control" />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Ingresar</button>
+</form>
+
+@section Scripts {
+    <script>
+        const API = document.getElementById("configuracionApi")
+            .dataset.apiBaseUrl;
+
+        const aviso = document.getElementById("avisoLogin");
+
+        function mostrarLogin(texto, tipo) {
+            aviso.textContent = texto;
+            aviso.className = texto ? "alert alert-" + tipo : "mb-3";
+        }
+
+        document.getElementById("formLogin").addEventListener(
+            "submit", async evento => {
+                evento.preventDefault();
+                mostrarLogin("", "");
+
+                try {
+                    const respuesta = await fetch(API + "api/cuentas/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            correo: document.getElementById("correo").value,
+                            contrasena: document.getElementById("contrasena").value
+                        })
+                    });
+
+                    if (!respuesta.ok) {
+                        mostrarLogin("Correo o contrasena incorrectos.", "danger");
+                        return;
+                    }
+
+                    const datos = await respuesta.json();
+
+                    sessionStorage.setItem("cafelab_token", datos.token);
+                    sessionStorage.setItem("cafelab_rol", datos.rol);
+
+                    location.href = "/Tablero";
+                } catch {
+                    mostrarLogin("No se pudo contactar al API.", "danger");
+                }
+            });
+    </script>
+}
