@@ -1,0 +1,6 @@
+@BellezaMas_HostAddress = http://localhost:5001
+
+GET {{BellezaMas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

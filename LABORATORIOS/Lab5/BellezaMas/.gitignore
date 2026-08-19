@@ -1,0 +1,33 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.csproj.user
+*.slnLaunch.user
+*.slnLaunch.user.bak
+
+# Compilacion
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+Debug/
+Release/
+
+# Secretos
+secrets.json
+**/secrets.json
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+.vscode/
+
+# Archivos generados
+DockerMigration.sql
+dbo.Categorias.data.sql
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,88 @@
+﻿@page
+@model BellezaMas.Web.Pages.Reportes.IndexModel
+
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Reportes
+    </h1>
+
+    <p class="text-secondary">
+        Genera un reporte de movimientos de inventario.
+    </p>
+
+</div>
+
+
+<div class="content-card report-card">
+
+    <div class="card-title-custom">
+        Reporte de movimientos
+    </div>
+
+    <p class="text-secondary">
+        Selecciona el periodo que deseas incluir en el PDF.
+    </p>
+
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">
+            @Model.MensajeError
+        </div>
+    }
+
+
+    <form method="post"
+          asp-page-handler="Descargar">
+
+        <div class="row g-3">
+
+            <div class="col-md-5">
+
+                <label asp-for="Desde"
+                       class="form-label">
+                    Desde
+                </label>
+
+                <input asp-for="Desde"
+                       type="date"
+                       class="form-control" />
+
+            </div>
+
+
+            <div class="col-md-5">
+
+                <label asp-for="Hasta"
+                       class="form-label">
+                    Hasta
+                </label>
+
+                <input asp-for="Hasta"
+                       type="date"
+                       class="form-control" />
+
+            </div>
+
+
+            <div class="col-md-2 d-flex align-items-end">
+
+                <button type="submit"
+                        class="btn btn-pink w-100">
+
+                    Generar PDF
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>

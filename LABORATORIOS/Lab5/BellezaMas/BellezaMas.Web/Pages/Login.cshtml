@@ -1,0 +1,125 @@
+﻿@page
+@model BellezaMas.Web.Pages.LoginModel
+
+@{
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belleza & Más</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+            body {
+                margin: 0;
+                background-color: #f7f5f8;
+                font-family: Arial, sans-serif;
+            }
+
+            .login-page {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-card {
+                width: 380px;
+                background-color: white;
+                padding: 35px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            .brand {
+                text-align: center;
+                color: #d94f8a;
+                font-size: 30px;
+                font-weight: bold;
+                margin-bottom: 5px;
+            }
+
+            .subtitle {
+                text-align: center;
+                color: #777;
+                margin-bottom: 25px;
+            }
+
+            .btn-login {
+                background-color: #d94f8a;
+                border: none;
+                color: white;
+            }
+
+                .btn-login:hover {
+                    background-color: #c43e79;
+                    color: white;
+                }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <div class="login-card">
+
+            <div class="brand">
+                Belleza & Más
+            </div>
+
+            <div class="subtitle">
+                Sistema de Gestión de Inventario
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="alert alert-danger">
+                    @Model.MensajeError
+                </div>
+            }
+
+            <form method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Correo</label>
+
+                    <input asp-for="Login.Correo"
+                           class="form-control"
+                           placeholder="correo@ejemplo.com" />
+
+                    <span asp-validation-for="Login.Correo"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Contraseña</label>
+
+                    <input asp-for="Login.Contrasena"
+                           type="password"
+                           class="form-control"
+                           placeholder="Ingrese su contraseña" />
+
+                    <span asp-validation-for="Login.Contrasena"
+                          class="text-danger"></span>
+                </div>
+
+                <button type="submit"
+                        class="btn btn-login w-100 py-2">
+                    Iniciar sesión
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

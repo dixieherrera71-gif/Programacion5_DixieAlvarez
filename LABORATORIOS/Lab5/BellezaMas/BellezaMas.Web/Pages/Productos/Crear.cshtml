@@ -1,0 +1,222 @@
+﻿@page
+@model BellezaMas.Web.Pages.Productos.CrearModel
+
+@{
+    ViewData["Title"] = "Nuevo producto";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Nuevo producto
+    </h1>
+
+    <p class="text-secondary">
+        Agrega un producto al inventario de Belleza & Más.
+    </p>
+
+</div>
+
+<div class="content-card product-form-card">
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">
+            @Model.MensajeError
+        </div>
+    }
+
+    <form method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3">
+        </div>
+
+        <div class="mb-3">
+
+            <label asp-for="Producto.Nombre"
+                   class="form-label">
+                Nombre del producto
+            </label>
+
+            <input asp-for="Producto.Nombre"
+                   class="form-control"
+                   placeholder="Ej. Crema facial hidratante" />
+
+            <span asp-validation-for="Producto.Nombre"
+                  class="text-danger"></span>
+
+        </div>
+
+
+        <div class="mb-3">
+
+            <label asp-for="Producto.Descripcion"
+                   class="form-label">
+                Descripción
+            </label>
+
+            <textarea asp-for="Producto.Descripcion"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Descripción breve del producto">
+            </textarea>
+
+            <span asp-validation-for="Producto.Descripcion"
+                  class="text-danger"></span>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label asp-for="Producto.Precio"
+                       class="form-label">
+                    Precio
+                </label>
+
+                <input asp-for="Producto.Precio"
+                       class="form-control"
+                       type="number"
+                       step="0.01" />
+
+                <span asp-validation-for="Producto.Precio"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <label asp-for="Producto.Stock"
+                       class="form-label">
+                    Stock
+                </label>
+
+                <input asp-for="Producto.Stock"
+                       class="form-control"
+                       type="number" />
+
+                <span asp-validation-for="Producto.Stock"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-3 mb-3">
+
+                <label asp-for="Producto.StockMinimo"
+                       class="form-label">
+                    Stock mínimo
+                </label>
+
+                <input asp-for="Producto.StockMinimo"
+                       class="form-control"
+                       type="number" />
+
+                <span asp-validation-for="Producto.StockMinimo"
+                      class="text-danger"></span>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label asp-for="Producto.CategoriaId"
+                       class="form-label">
+                    Categoría
+                </label>
+
+                <select asp-for="Producto.CategoriaId"
+                        class="form-select">
+
+                    <option value="0">
+                        Seleccione una categoría
+                    </option>
+
+                    @foreach (var categoria in Model.Categorias)
+                    {
+                        <option value="@categoria.Id">
+                            @categoria.Nombre
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Producto.CategoriaId"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label asp-for="Producto.ProveedorId"
+                       class="form-label">
+                    Proveedor
+                </label>
+
+                <select asp-for="Producto.ProveedorId"
+                        class="form-select">
+
+                    <option value="0">
+                        Seleccione un proveedor
+                    </option>
+
+                    @foreach (var proveedor in Model.Proveedores)
+                    {
+                        <option value="@proveedor.Id">
+                            @proveedor.Nombre
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="Producto.ProveedorId"
+                      class="text-danger"></span>
+
+            </div>
+
+        </div>
+
+
+        <div class="form-check mb-4">
+
+            <input asp-for="Producto.Activo"
+                   class="form-check-input" />
+
+            <label asp-for="Producto.Activo"
+                   class="form-check-label">
+                Producto activo
+            </label>
+
+        </div>
+
+
+        <div class="d-flex justify-content-end gap-2">
+
+            <a asp-page="/Productos/Index"
+               class="btn btn-light border">
+                Cancelar
+            </a>
+
+            <button type="submit"
+                    class="btn btn-pink">
+                Guardar producto
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

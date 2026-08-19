@@ -1,0 +1,103 @@
+﻿@page
+@model BellezaMas.Web.Pages.Proveedores.IndexModel
+
+@{
+    ViewData["Title"] = "Proveedores";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Proveedores
+    </h1>
+
+    <p class="text-secondary">
+        Consulta los proveedores registrados en Belleza & Más.
+    </p>
+
+</div>
+
+
+<div class="content-card">
+
+    <div class="card-title-custom">
+        Proveedores registrados
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Proveedor</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @if (Model.Proveedores.Count == 0)
+                {
+                    <tr>
+                        <td colspan="5"
+                            class="text-center text-secondary py-4">
+
+                            No hay proveedores registrados.
+
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var proveedor in Model.Proveedores)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    @proveedor.Nombre
+                                </strong>
+                            </td>
+
+                            <td>
+                                @(proveedor.Telefono ?? "-")
+                            </td>
+
+                            <td>
+                                @(proveedor.Correo ?? "-")
+                            </td>
+
+                            <td>
+                                @(proveedor.Direccion ?? "-")
+                            </td>
+
+                            <td>
+                                @if (proveedor.Activo)
+                                {
+                                    <span class="badge-stock-ok">
+                                        Activo
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-stock-low">
+                                        Inactivo
+                                    </span>
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

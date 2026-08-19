@@ -1,0 +1,133 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    string nombre = Context.Session.GetString("NombreUsuario") ?? "Usuario";
+    string rol = Context.Session.GetString("Rol") ?? "";
+    string ruta = Context.Request.Path.Value?.ToLowerInvariant() ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Belleza & Más</title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="brand-area">
+            <div class="brand-name">
+                Belleza & Más
+            </div>
+
+            <div class="brand-subtitle">
+                Gestión de Inventario
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a asp-page="/Index"
+               class="menu-link @(ruta == "/" || ruta.StartsWith("/index") ? "active" : "")">
+                Inicio
+            </a>
+
+            <a asp-page="/Productos/Index"
+               class="menu-link @(ruta.StartsWith("/productos") ? "active" : "")">
+                Productos
+            </a>
+
+            <a asp-page="/Categorias/Index"
+               class="menu-link @(ruta.StartsWith("/categorias") ? "active" : "")">
+                Categorías
+            </a>
+
+            <a asp-page="/Proveedores/Index"
+               class="menu-link @(ruta.StartsWith("/proveedores") ? "active" : "")">
+                Proveedores
+            </a>
+
+            <a asp-page="/Movimientos/Index"
+               class="menu-link @(ruta.StartsWith("/movimientos") ? "active" : "")">
+                Movimientos
+            </a>
+
+            @if (rol == "Administrador")
+            {
+                <a asp-page="/Reportes/Index"
+                   class="menu-link @(ruta.StartsWith("/reportes") ? "active" : "")">
+                    Reportes
+                </a>
+            }
+
+            @if (rol == "Administrador")
+            {
+                <a asp-page="/Usuarios/Index"
+                   class="menu-link @(ruta.StartsWith("/usuarios") ? "active" : "")">
+                    Usuarios
+                </a>
+            }
+
+        </nav>
+
+        <div class="logout-area">
+
+            <a asp-page="/Logout"
+               class="logout-link">
+                Cerrar sesión
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <span class="welcome-text">
+                    @nombre
+                </span>
+
+                <span class="role-text">
+                    @rol
+                </span>
+            </div>
+
+        </header>
+
+
+        <div class="page-content">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    @await RenderSectionAsync(
+        "Scripts",
+        required: false)
+
+</body>
+
+</html>

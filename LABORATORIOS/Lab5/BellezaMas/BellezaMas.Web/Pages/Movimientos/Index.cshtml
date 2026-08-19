@@ -1,0 +1,241 @@
+﻿@page
+@model BellezaMas.Web.Pages.Movimientos.IndexModel
+
+@{
+    ViewData["Title"] = "Movimientos";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Movimientos de inventario
+    </h1>
+
+    <p class="text-secondary">
+        Registra entradas y salidas de productos.
+    </p>
+
+</div>
+
+
+<div class="content-card mb-4">
+
+    <div class="card-title-custom">
+        Nuevo movimiento
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.MensajeExito))
+    {
+        <div class="alert alert-success">
+            @Model.MensajeExito
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">
+            @Model.MensajeError
+        </div>
+    }
+
+    <form method="post"
+          asp-page-handler="Registrar">
+
+        <div class="row g-3">
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Producto
+                </label>
+
+                <select asp-for="NuevoMovimiento.ProductoId"
+                        class="form-select">
+
+                    <option value="0">
+                        Seleccione un producto
+                    </option>
+
+                    @foreach (var producto in Model.Productos)
+                    {
+                        <option value="@producto.Id">
+                            @producto.Nombre - Stock: @producto.Stock
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="NuevoMovimiento.ProductoId"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-2">
+
+                <label class="form-label">
+                    Tipo
+                </label>
+
+                <select asp-for="NuevoMovimiento.TipoMovimiento"
+                        class="form-select">
+
+                    <option value="">
+                        Seleccione
+                    </option>
+
+                    <option value="Entrada">
+                        Entrada
+                    </option>
+
+                    <option value="Salida">
+                        Salida
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="NuevoMovimiento.TipoMovimiento"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-2">
+
+                <label class="form-label">
+                    Cantidad
+                </label>
+
+                <input asp-for="NuevoMovimiento.Cantidad"
+                       type="number"
+                       class="form-control" />
+
+                <span asp-validation-for="NuevoMovimiento.Cantidad"
+                      class="text-danger"></span>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Observación
+                </label>
+
+                <input asp-for="NuevoMovimiento.Observacion"
+                       class="form-control"
+                       placeholder="Ej. Compra al proveedor" />
+
+            </div>
+
+        </div>
+
+
+        <div class="text-end mt-3">
+
+            <button type="submit"
+                    class="btn btn-pink">
+
+                Registrar movimiento
+
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="content-card">
+
+    <div class="card-title-custom">
+        Movimientos recientes
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+                    <th>Fecha</th>
+                    <th>Producto</th>
+                    <th>Tipo</th>
+                    <th>Cantidad</th>
+                    <th>Observación</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @if (Model.Movimientos.Count == 0)
+                {
+                    <tr>
+                        <td colspan="5"
+                            class="text-center text-secondary py-4">
+
+                            No hay movimientos registrados.
+
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var movimiento in Model.Movimientos)
+                    {
+                        <tr>
+
+                            <td>
+                                @movimiento.Fecha.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                <strong>
+                                    @movimiento.ProductoNombre
+                                </strong>
+                            </td>
+
+                            <td>
+
+                                @if (movimiento.TipoMovimiento == "Entrada")
+                                {
+                                    <span class="badge-entry">
+                                        Entrada
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-exit">
+                                        Salida
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+                                @movimiento.Cantidad
+                            </td>
+
+                            <td>
+                                @movimiento.Observacion
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

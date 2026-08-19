@@ -1,0 +1,359 @@
+html {
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    background-color: #f7f8fc;
+    color: #172554;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   BARRA LATERAL
+   ========================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100vh;
+    background-color: #0b2553;
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+}
+
+
+.brand-area {
+    margin-bottom: 35px;
+    padding: 0 10px;
+}
+
+
+.brand-name {
+    color: #f3a4c4;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+
+.brand-subtitle {
+    color: #cbd5e1;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+
+/* =========================
+   MENÚ
+   ========================= */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+.menu-link {
+    display: block;
+    padding: 12px 15px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 9px;
+    transition: 0.2s;
+}
+
+
+    .menu-link:hover {
+        background-color: rgba(255,255,255,0.08);
+        color: #ffffff;
+    }
+
+
+    .menu-link.active {
+        background-color: #e86a9c;
+        color: #ffffff;
+    }
+
+
+/* =========================
+   CERRAR SESIÓN
+   ========================= */
+
+.logout-area {
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 18px;
+}
+
+
+.logout-link {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+
+    .logout-link:hover {
+        background-color: rgba(255,255,255,0.08);
+        color: #ffffff;
+    }
+
+
+/* =========================
+   CONTENIDO PRINCIPAL
+   ========================= */
+
+.main-content {
+    margin-left: 230px;
+    min-height: 100vh;
+}
+
+
+.topbar {
+    height: 75px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 35px;
+}
+
+
+.welcome-text {
+    display: block;
+    font-weight: 600;
+    color: #172554;
+    text-align: right;
+}
+
+
+.role-text {
+    display: block;
+    font-size: 12px;
+    color: #8b5cf6;
+    text-align: right;
+}
+
+
+.page-content {
+    padding: 30px;
+}
+
+
+/* =========================
+   TARJETAS
+   ========================= */
+
+.dashboard-title {
+    font-size: 27px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+
+.stat-card {
+    background-color: #ffffff;
+    border: 1px solid #edf0f5;
+    border-radius: 13px;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    height: 100%;
+}
+
+
+.stat-label {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+
+.stat-number {
+    color: #172554;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+    .stat-number.pink {
+        color: #e86a9c;
+    }
+
+
+    .stat-number.purple {
+        color: #8b5cf6;
+    }
+
+
+    .stat-number.warning {
+        color: #ef6c57;
+    }
+
+
+/* =========================
+   PANEL
+   ========================= */
+
+.content-card {
+    background-color: #ffffff;
+    border-radius: 13px;
+    border: 1px solid #edf0f5;
+    padding: 22px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+}
+
+
+.card-title-custom {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .main-content {
+        margin-left: 190px;
+    }
+
+    .brand-name {
+        font-size: 20px;
+    }
+
+    /* =========================
+   BOTONES
+   ========================= */
+
+    .btn-pink {
+        background-color: #e86a9c;
+        border-color: #e86a9c;
+        color: white;
+    }
+
+        .btn-pink:hover {
+            background-color: #d95689;
+            border-color: #d95689;
+            color: white;
+        }
+
+
+    /* =========================
+   TABLAS
+   ========================= */
+
+    .table thead th {
+        background-color: #faf5ff;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 600;
+        border-bottom: none;
+        padding: 14px;
+    }
+
+    .table tbody td {
+        padding: 14px;
+        color: #334155;
+        border-color: #f1f5f9;
+    }
+
+
+    /* =========================
+   STOCK
+   ========================= */
+
+    .badge-stock-ok {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background-color: #e8f7ed;
+        color: #16803c;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-stock-low {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background-color: #fff1e8;
+        color: #e15d2f;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* =========================
+   FORMULARIOS
+   ========================= */
+
+    .product-form-card {
+        max-width: 850px;
+    }
+
+    .form-label {
+        color: #334155;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .form-control,
+    .form-select {
+        border-color: #dfe3ea;
+        padding: 10px 12px;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #e86a9c;
+            box-shadow: 0 0 0 0.2rem rgba(232, 106, 156, 0.12);
+        }
+
+    /* =========================
+   MOVIMIENTOS
+   ========================= */
+
+    .badge-entry {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background-color: #e8f7ed;
+        color: #16803c;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+
+    .badge-exit {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background-color: #fdebed;
+        color: #c93a4b;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* =========================
+   REPORTES
+   ========================= */
+
+    .report-card {
+        max-width: 850px;
+    }
+}

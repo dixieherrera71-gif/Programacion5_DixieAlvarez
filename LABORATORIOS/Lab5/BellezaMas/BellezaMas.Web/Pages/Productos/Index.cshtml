@@ -1,0 +1,238 @@
+﻿@page
+@model BellezaMas.Web.Pages.Productos.IndexModel
+
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h1 class="dashboard-title mb-1">
+            Productos
+        </h1>
+
+        <p class="text-secondary mb-0">
+            Administra los productos de Belleza & Más.
+        </p>
+    </div>
+
+    @if (Model.Rol == "Administrador")
+    {
+        <a asp-page="/Productos/Crear"
+           class="btn btn-pink">
+            + Nuevo producto
+        </a>
+    }
+
+</div>
+
+
+<div class="content-card">
+
+    <form method="get"
+          class="row g-3 mb-4">
+
+        <div class="col-md-6">
+
+            <label class="form-label">
+                Buscar producto
+            </label>
+
+            <input asp-for="Buscar"
+                   class="form-control"
+                   placeholder="Ej. Sérum, shampoo..." />
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <label class="form-label">
+                Ordenar por
+            </label>
+
+            <select asp-for="Orden"
+                    class="form-select">
+
+                <option value="nombre">
+                    Nombre
+                </option>
+
+                <option value="precio">
+                    Precio
+                </option>
+
+                <option value="stock">
+                    Stock
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="col-md-3 d-flex align-items-end">
+
+            <button type="submit"
+                    class="btn btn-pink w-100">
+                Buscar
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Proveedor</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+
+                    @if (Model.Rol == "Administrador")
+                    {
+                        <th>Acciones</th>
+                    }
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @if (Model.Productos.Count == 0)
+                {
+                    <tr>
+
+                        <td colspan="7"
+                            class="text-center text-secondary py-4">
+
+                            No se encontraron productos.
+
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var producto in Model.Productos)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    @producto.Nombre
+                                </strong>
+                            </td>
+
+                            <td>
+                                @producto.CategoriaNombre
+                            </td>
+
+                            <td>
+                                @producto.ProveedorNombre
+                            </td>
+
+                            <td>
+                                ₡@producto.Precio.ToString("N0")
+                            </td>
+
+                            <td>
+                                @producto.Stock
+                            </td>
+
+                            <td>
+
+                                @if (producto.StockBajo)
+                                {
+                                    <span class="badge-stock-low">
+                                        Bajo stock
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-stock-ok">
+                                        Disponible
+                                    </span>
+                                }
+
+                            </td>
+
+                            @if (Model.Rol == "Administrador")
+                            {
+                                <td>
+
+                                    <a asp-page="/Productos/Editar"
+                                       asp-route-id="@producto.Id"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Editar
+                                    </a>
+
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+
+        <div>
+
+            @if (Model.Pagina > 1)
+            {
+                <a asp-page="/Productos/Index"
+                   asp-route-Buscar="@Model.Buscar"
+                   asp-route-Orden="@Model.Orden"
+                   asp-route-Pagina="@(Model.Pagina - 1)"
+                   class="btn btn-light border">
+
+                    ← Anterior
+
+                </a>
+            }
+
+        </div>
+
+
+        <div class="text-secondary">
+            Página @Model.Pagina
+        </div>
+
+
+        <div>
+
+            @if (Model.Productos.Count == Model.Tamano)
+            {
+                <a asp-page="/Productos/Index"
+                   asp-route-Buscar="@Model.Buscar"
+                   asp-route-Orden="@Model.Orden"
+                   asp-route-Pagina="@(Model.Pagina + 1)"
+                   class="btn btn-light border">
+
+                    Siguiente →
+
+                </a>
+            }
+
+        </div>
+
+    </div>
+
+</div>

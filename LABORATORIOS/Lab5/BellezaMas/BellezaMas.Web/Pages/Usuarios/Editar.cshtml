@@ -1,0 +1,108 @@
+﻿@page "{id:int}"
+@model BellezaMas.Web.Pages.Usuarios.EditarModel
+
+@{
+    ViewData["Title"] = "Editar usuario";
+}
+
+<div class="mb-4">
+    <h1 class="dashboard-title mb-1">
+        Editar usuario
+    </h1>
+
+    <p class="text-secondary">
+        Modifica el usuario, su rol o su estado.
+    </p>
+</div>
+
+
+<div class="content-card product-form-card">
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">
+            @Model.MensajeError
+        </div>
+    }
+
+    <form method="post">
+
+        <div class="mb-3">
+            <label class="form-label">
+                Nombre
+            </label>
+
+            <input asp-for="Usuario.NombreUsuario"
+                   class="form-control" />
+
+            <span asp-validation-for="Usuario.NombreUsuario"
+                  class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <label class="form-label">
+                Correo
+            </label>
+
+            <input asp-for="Usuario.Correo"
+                   class="form-control" />
+
+            <span asp-validation-for="Usuario.Correo"
+                  class="text-danger"></span>
+        </div>
+
+
+        <div class="mb-3">
+            <label class="form-label">
+                Rol
+            </label>
+
+            <select asp-for="Usuario.RolId"
+                    class="form-select">
+
+                @foreach (var rol in Model.Roles)
+                {
+                    <option value="@rol.Id">
+                        @rol.NombreRol
+                    </option>
+                }
+
+            </select>
+        </div>
+
+
+        <div class="form-check mb-4">
+
+            <input asp-for="Usuario.Activo"
+                   class="form-check-input" />
+
+            <label asp-for="Usuario.Activo"
+                   class="form-check-label">
+                Usuario activo
+            </label>
+
+        </div>
+
+
+        <div class="d-flex justify-content-end gap-2">
+
+            <a asp-page="/Usuarios/Index"
+               class="btn btn-light border">
+                Cancelar
+            </a>
+
+            <button type="submit"
+                    class="btn btn-pink">
+                Guardar cambios
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BellezaMas.Web/BellezaMas.Web.csproj" Id="d6c3c64b-077d-4641-a31a-476413fb77b6" />
+  <Project Path="BellezaMas/BellezaMas.Api.csproj" />
+</Solution>

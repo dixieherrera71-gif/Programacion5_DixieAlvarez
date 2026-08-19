@@ -1,0 +1,278 @@
+﻿@page
+@model BellezaMas.Web.Pages.Usuarios.IndexModel
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Usuarios
+    </h1>
+
+    <p class="text-secondary">
+        Administra las cuentas que pueden ingresar al sistema.
+    </p>
+
+</div>
+
+
+<!-- =========================
+     NUEVO USUARIO
+     ========================= -->
+
+<div class="content-card mb-4">
+
+    <div class="card-title-custom">
+        Nuevo usuario
+    </div>
+
+
+    @if (!string.IsNullOrEmpty(Model.MensajeExito))
+    {
+        <div class="alert alert-success">
+            @Model.MensajeExito
+        </div>
+    }
+
+
+    @if (!string.IsNullOrEmpty(Model.MensajeError))
+    {
+        <div class="alert alert-danger">
+            @Model.MensajeError
+        </div>
+    }
+
+
+    <form method="post"
+          asp-page-handler="Crear">
+
+        <div class="row g-3">
+
+            <!-- Nombre -->
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Nombre
+                </label>
+
+                <input asp-for="NuevoUsuario.NombreUsuario"
+                       class="form-control"
+                       placeholder="Nombre del usuario" />
+
+                <span asp-validation-for="NuevoUsuario.NombreUsuario"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Correo -->
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Correo
+                </label>
+
+                <input asp-for="NuevoUsuario.Correo"
+                       class="form-control"
+                       placeholder="correo@ejemplo.com" />
+
+                <span asp-validation-for="NuevoUsuario.Correo"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Contraseña -->
+            <div class="col-md-2">
+
+                <label class="form-label">
+                    Contraseña
+                </label>
+
+                <input asp-for="NuevoUsuario.Contrasena"
+                       type="password"
+                       class="form-control" />
+
+                <span asp-validation-for="NuevoUsuario.Contrasena"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Rol -->
+            <div class="col-md-2">
+
+                <label class="form-label">
+                    Rol
+                </label>
+
+                <select asp-for="NuevoUsuario.RolId"
+                        class="form-select">
+
+                    <option value="0">
+                        Seleccione
+                    </option>
+
+                    @foreach (var rol in Model.Roles)
+                    {
+                        <option value="@rol.Id">
+                            @rol.NombreRol
+                        </option>
+                    }
+
+                </select>
+
+                <span asp-validation-for="NuevoUsuario.RolId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Botón crear -->
+            <div class="col-md-2 d-flex align-items-end">
+
+                <button type="submit"
+                        class="btn btn-pink w-100">
+
+                    Crear usuario
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<!-- =========================
+     LISTADO DE USUARIOS
+     ========================= -->
+
+<div class="content-card">
+
+    <div class="card-title-custom">
+        Usuarios registrados
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @if (Model.Usuarios.Count == 0)
+                {
+                    <tr>
+
+                        <td colspan="5"
+                            class="text-center text-secondary py-4">
+
+                            No hay usuarios registrados.
+
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var usuario in Model.Usuarios)
+                    {
+                        <tr>
+
+                            <!-- Nombre -->
+                            <td>
+
+                                <strong>
+                                    @usuario.NombreUsuario
+                                </strong>
+
+                            </td>
+
+
+                            <!-- Correo -->
+                            <td>
+                                @usuario.Correo
+                            </td>
+
+
+                            <!-- Rol -->
+                            <td>
+                                @usuario.RolNombre
+                            </td>
+
+
+                            <!-- Estado -->
+                            <td>
+
+                                @if (usuario.Activo)
+                                {
+                                    <span class="badge-stock-ok">
+                                        Activo
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-stock-low">
+                                        Inactivo
+                                    </span>
+                                }
+
+                            </td>
+
+
+                            <!-- Acciones -->
+                            <td>
+
+                                <a asp-page="/Usuarios/Editar"
+                                   asp-route-id="@usuario.Id"
+                                   class="btn btn-sm btn-outline-secondary">
+
+                                    Editar
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

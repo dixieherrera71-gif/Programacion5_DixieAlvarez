@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "BellezaMas\\BellezaMas.Api.csproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "BellezaMas.Web\\BellezaMas.Web.csproj",
+        "Action": "StartWithoutDebugging"
+      }
+    ]
+  }
+]
