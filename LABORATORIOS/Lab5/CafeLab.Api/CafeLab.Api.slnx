@@ -3,6 +3,6 @@
     <File Path=".dockerignore" />
     <File Path="Dockerfile" />
   </Folder>
-  <Project Path="../../../../../../../../DESARROLLO/Programacion5_DixieAlvarez/LABORATORIOS/Lab5/CafeLab.Api/CafeLab.Api/CafeLab.Api.csproj" />
-  <Project Path="../../../../../../../../DESARROLLO/Programacion5_DixieAlvarez/LABORATORIOS/Lab5/CafeLab.Api/CafeLab.Web/CafeLab.Web.csproj" Id="02aba611-94fa-48f6-b1f9-5b2accf277de" />
+  <Project Path="CafeLab.Api/CafeLab.Api.csproj" />
+  <Project Path="CafeLab.Web/CafeLab.Web.csproj" Id="02aba611-94fa-48f6-b1f9-5b2accf277de" />
 </Solution>

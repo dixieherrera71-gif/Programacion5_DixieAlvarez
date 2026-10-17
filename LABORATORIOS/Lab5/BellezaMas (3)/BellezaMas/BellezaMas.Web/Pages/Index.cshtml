@@ -1,0 +1,211 @@
+﻿@page
+@model BellezaMas.Web.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Panel de Inventario
+    </h1>
+
+    <p class="text-secondary mb-0">
+        Resumen general de Belleza & Más.
+    </p>
+
+</div>
+
+
+<!-- TARJETAS -->
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-3">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Productos
+            </div>
+
+            <div class="stat-number pink">
+                @Model.Dashboard.TotalProductos
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Categorías
+            </div>
+
+            <div class="stat-number purple">
+                @Model.Dashboard.TotalCategorias
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Proveedores
+            </div>
+
+            <div class="stat-number">
+                @Model.Dashboard.TotalProveedores
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Stock bajo
+            </div>
+
+            <div class="stat-number warning">
+                @Model.Dashboard.StockBajo
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- PRODUCTOS RECIENTES -->
+
+<div class="content-card">
+
+    <div class="d-flex justify-content-between
+        align-items-center mb-3">
+
+        <div class="card-title-custom mb-0">
+            Productos recientes
+        </div>
+
+        <a asp-page="/Productos/Index"
+           class="btn btn-sm btn-light border">
+
+            Ver todos
+
+        </a>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+
+                <tr>
+                    <th>Producto</th>
+                    <th>Categoría</th>
+                    <th>Proveedor</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @if (Model.Dashboard.ProductosRecientes.Count == 0)
+                {
+                    <tr>
+
+                        <td colspan="6"
+                            class="text-center text-secondary py-4">
+
+                            No hay productos registrados.
+
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var producto
+                        in Model.Dashboard.ProductosRecientes)
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    @producto.Nombre
+                                </strong>
+                            </td>
+
+
+                            <td>
+                                @producto.CategoriaNombre
+                            </td>
+
+
+                            <td>
+                                @producto.ProveedorNombre
+                            </td>
+
+
+                            <td>
+                                ₡@producto.Precio.ToString("N0")
+                            </td>
+
+
+                            <td>
+                                @producto.Stock
+                            </td>
+
+
+                            <td>
+
+                                @if (producto.StockBajo)
+                                {
+                                    <span class="badge-stock-low">
+                                        Bajo stock
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge-stock-ok">
+                                        Disponible
+                                    </span>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

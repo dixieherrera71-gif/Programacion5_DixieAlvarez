@@ -1,0 +1,158 @@
+﻿@page
+@model BellezaMas.Web.Pages.Categorias.IndexModel
+
+@{
+    ViewData["Title"] = "Categorías";
+}
+
+<div class="mb-4">
+
+    <h1 class="dashboard-title mb-1">
+        Categorías
+    </h1>
+
+    <p class="text-secondary">
+        Organiza los productos por categoría.
+    </p>
+
+</div>
+
+
+@if (Model.Rol == "Administrador")
+{
+    <div class="content-card mb-4">
+
+        <div class="card-title-custom">
+            Nueva categoría
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.MensajeError))
+        {
+            <div class="alert alert-danger">
+                @Model.MensajeError
+            </div>
+        }
+
+        <form method="post"
+              asp-page-handler="Crear">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+
+                    <label class="form-label">
+                        Nombre
+                    </label>
+
+                    <input asp-for="NuevaCategoria.Nombre"
+                           class="form-control"
+                           placeholder="Ej. Cuidado corporal" />
+
+                    <span asp-validation-for="NuevaCategoria.Nombre"
+                          class="text-danger"></span>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+                        Descripción
+                    </label>
+
+                    <input asp-for="NuevaCategoria.Descripcion"
+                           class="form-control"
+                           placeholder="Descripción de la categoría" />
+
+                </div>
+
+
+                <div class="col-md-2 d-flex align-items-end">
+
+                    <button type="submit"
+                            class="btn btn-pink w-100">
+
+                        Agregar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+}
+
+
+<div class="content-card">
+
+    <div class="card-title-custom">
+        Categorías registradas
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table align-middle">
+
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Productos</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var categoria in Model.Categorias)
+                {
+                    <tr>
+
+                        <td>
+                            <strong>
+                                @categoria.Nombre
+                            </strong>
+                        </td>
+
+                        <td>
+                            @categoria.Descripcion
+                        </td>
+
+                        <td>
+                            @categoria.CantidadProductos
+                        </td>
+
+                        <td>
+
+                            @if (categoria.Activo)
+                            {
+                                <span class="badge-stock-ok">
+                                    Activa
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge-stock-low">
+                                    Inactiva
+                                </span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
