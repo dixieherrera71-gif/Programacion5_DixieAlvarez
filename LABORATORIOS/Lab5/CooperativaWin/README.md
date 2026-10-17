@@ -39,3 +39,15 @@ Con Await la interfaz continúa respondiendo mientras se realiza la espera.
 ## Uso de inteligencia artificial
 
 Se utilizó inteligencia artificial generativa como apoyo para comprender los requisitos de la práctica, organizar la estructura de las clases y revisar el código durante el desarrollo.
+
+## Pruebas realizadas
+
+La aplicación fue probada con los casos indicados en la práctica:
+
+- Cálculo de interés para cuenta a la vista.
+- Cálculo de interés para cuenta navideña.
+- Retiros permitidos y rechazados según saldo y mes.
+- Validación de números de cuenta duplicados.
+- Validación de saldo inicial negativo.
+- Consulta de historial crediticio con y sin morosidad.
+- Verificación de que la interfaz continúa respondiendo durante Actrla consulta.
