@@ -39,7 +39,10 @@
 
             ActualizarLista()
 
-            MessageBox.Show("Cuenta registrada correctamente.")
+            MessageBox.Show("Cuenta registrada correctamente.",
+                "Registro exitoso",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information)
 
             LimpiarRegistro()
 
@@ -98,7 +101,10 @@
 
             cuentaSeleccionada.Retirar(monto, mes)
 
-            MessageBox.Show("Retiro realizado correctamente.")
+            MessageBox.Show("Retiro realizado correctamente.",
+                "Retiro exitoso",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information)
 
             ActualizarLista()
 
